@@ -18,20 +18,11 @@ namespace GoogleCodeJams
 
         public static IEnumerable<VectorPairs> ParseFileText(string inputFile)
         {
-            var problemLines = InputOutputHelper
+            return InputOutputHelper
                 .ReadLines(inputFile)
-                .Skip(1);            
-
-            var linesEnumerator = problemLines.GetEnumerator();
-            while (linesEnumerator.MoveNext())
-            {
-                linesEnumerator.MoveNext();
-                var line1 = linesEnumerator.Current;
-                linesEnumerator.MoveNext();
-                var line2 = linesEnumerator.Current;
-
-                yield return ParseProblem(line1,line2);
-            }
+                .Skip(1)
+                .ChunkBySize(3)
+                .Select(problem => ParseProblem(problem[1], problem[2]));
         }
 
         private static VectorPairs ParseProblem(string line1, string line2)

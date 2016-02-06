@@ -5,7 +5,7 @@ namespace GoogleCodeJams
 {
     public static class EnumerationHelper
     {
-        public static IEnumerable<IEnumerable<T>> ChunkBySize<T>(this IEnumerable<T> seq, int chunkSize)
+        public static IEnumerable<IList<T>> ChunkBySize<T>(this IEnumerable<T> seq, int chunkSize)
         {
             if (chunkSize <= 0)
             {
