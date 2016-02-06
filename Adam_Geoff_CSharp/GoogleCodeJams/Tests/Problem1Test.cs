@@ -25,7 +25,7 @@ all your base
 Case #2: foobar
 Case #3: base your all";
 
-            Assert.That(Problem1.Solver(inputFile), Is.EqualTo(expectedOutput));
+            Assert.That(Problem1.SolverToString(inputFile), Is.EqualTo(expectedOutput));
         }
 
         [Test]
@@ -33,7 +33,7 @@ Case #3: base your all";
         {
             var input = File.ReadAllText("../../B-small-practice.in");
             var results = Problem1.Solver(input);
-            File.WriteAllText("../../B-small-practice.out", results);
+            File.WriteAllLines("../../B-small-practice.out", results);
         }
 
         [Test]
@@ -41,7 +41,16 @@ Case #3: base your all";
         {
             var input = File.ReadAllText("../../B-large-practice.in");
             var results = Problem1.Solver(input);
-            File.WriteAllText("../../B-large-practice.out", results);
+            File.WriteAllLines("../../B-large-practice.out", results);
+        }
+
+        [Test]
+        [Ignore]
+        public void Process_vlarge_file()
+        {
+            var lines = File.ReadLines("../../E");
+            var results = Problem1.Solver(lines, false);
+            File.WriteAllLines("../../E.out", results);
         }
     }
 }

@@ -1,25 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using static System.Int32;
-using static System.String;
 
 namespace GoogleCodeJams
 {
     static class InputOutputHelper
     {
-        public static string ToOutputLines(this IEnumerable<string> lines)
+        public static IEnumerable<string> ToOutputLines(this IEnumerable<string> lines)
         {
-            var numbers = Enumerable.Range(1, MaxValue);
-
-            var outputLines = numbers.Zip(lines, (lineCount, line) => $"Case #{lineCount}: {line}");
-
-            return Join(Environment.NewLine, outputLines);
+            return Enumerable
+                .Range(1, MaxValue)
+                .Zip(lines, (lineCount, line) => $"Case #{lineCount}: {line}")
+                ;
         }
 
-        public static string[] ReadLines(string inputFile)
+        public static string ToOutputLinesString(this IEnumerable<string> lines)
         {
-            return inputFile.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            return string.Join(Environment.NewLine, lines.ToOutputLines());
+        }
+
+        public static void ToOutputLinesTextWriter(this IEnumerable<string> lines, TextWriter textWriter)
+        {
+            foreach(string line in lines.ToOutputLines())
+            {
+                textWriter.Write(line);
+            }
         }
     }
 }

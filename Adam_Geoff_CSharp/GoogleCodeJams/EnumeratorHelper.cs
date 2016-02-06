@@ -29,6 +29,14 @@ namespace GoogleCodeJams
                 yield return chunk;
             }
         }
+
+        public static IEnumerable<T> SelectWhileNotNull<T>(this IEnumerable<T> seq, Func<T> action)
+        {
+            for (var v = action(); v != null; v = action())
+            {
+                yield return v;
+            }
+        }  
     }
 }
 

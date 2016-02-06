@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace GoogleCodeJams
@@ -18,8 +19,13 @@ namespace GoogleCodeJams
 
         public static IEnumerable<VectorPairs> ParseFileText(string inputFile)
         {
-            return InputOutputHelper
-                .ReadLines(inputFile)
+            return ParseFileText(new StringReader(inputFile));
+        }
+
+        public static IEnumerable<VectorPairs> ParseFileText(TextReader stringReader)
+        {
+            return stringReader
+                .ReadLines()
                 .Skip(1)
                 .ChunkBySize(3)
                 .Select(problem => ParseProblem(problem[1], problem[2]));
@@ -41,7 +47,16 @@ namespace GoogleCodeJams
         {
             return solutions
                 .Select(i=>i.ToString())
+                .ToOutputLinesString();
+        }
+
+        public static void SolutionsToFile(IEnumerable<int> solutions, string path)
+        {
+            var outputLines = solutions
+                .Select(i => i.ToString())
                 .ToOutputLines();
+
+            File.WriteAllLines(path, outputLines);
         }
     }
 }

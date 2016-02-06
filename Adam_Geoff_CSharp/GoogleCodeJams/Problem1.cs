@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using static System.String;
 
@@ -12,13 +14,24 @@ namespace GoogleCodeJams
             return Join(" ", words.Reverse());
         }
 
-        public static string Solver(string inputFile)
+        public static IEnumerable<string> Solver(IEnumerable<string> lines, bool skipFirstLine = true)
         {
-            return InputOutputHelper
-                .ReadLines(inputFile)
-                .Skip(1)
+            var skipCount = skipFirstLine ? 1:0;
+
+            return lines
+                .Skip(skipCount)
                 .Select(SentenceWordReverse)
                 .ToOutputLines();
+        }
+
+        public static IEnumerable<string> Solver(string inputText)
+        {
+            return Solver(new StringReader(inputText).ReadLines());
+        }
+
+        public static string SolverToString(string inputText)
+        {
+            return Join(Environment.NewLine, Solver(inputText));
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using NUnit.Framework;
 
@@ -37,7 +38,9 @@ namespace GoogleCodeJams.Tests
 1 0 1 0 1
 ";
 
-            List<VectorPairs> vectorPairs = Problem2.ParseFileText(inputFile).ToList();
+            var stringReader = new StringReader(inputFile);
+
+            var vectorPairs = Problem2.ParseFileText(stringReader).ToList();
             Assert.That(vectorPairs.Count, Is.EqualTo(2));
 
             Assert.That(vectorPairs[0].First, Is.EqualTo(new[] {1, 3, -5}));
